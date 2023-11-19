@@ -1,7 +1,7 @@
 {
   "name": "book-shop-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "REST API server of a book shop website",
   "main": "index.js",
   "type": "module",
   "scripts": {

@@ -21,7 +21,6 @@ import books from "./bookRoutes.js"
 */
 const routes = (app) => {
   app.route("/").get((req, res) => res.status(200).send("Book shop server"))
-
   app.use(express.json(), books)
 }
 

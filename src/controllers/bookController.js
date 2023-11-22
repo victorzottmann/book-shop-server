@@ -2,72 +2,60 @@ import book from "../models/book.js"
 
 class BookController {
   static async getBooks(req, res) {
-    const books = await book.find({})
-    res.status(200).json(books)
+    try {
+      const books = await book.find({})
+      res.status(200).json(books)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
   }
 
   static async getBookById(req, res) {
     try {
-      const foundBook = await book.findById(req.params.id)
-      res.status(200).json({
-        book: foundBook
-      })
+      const id = req.params.id
+      const foundBook = await book.findById(id)
+      res.status(200).json(foundBook)
     } catch (error) {
-      res.status(500).json({
-        message: `${error.message} - book not found`
-      })
+      res.status(500).json({ message: error.message })
     }
   }
 
-  static async registerBook(req, res) {
+  static async createBook(req, res) {
     try {
       const newBook = await book.create(req.body)
       res.status(201).json({
-        message: "book created successfully",
-        book: newBook,
+        message: "book created",
+        newBook,
       })
     } catch (error) {
-      res.status(500).json({
-        message: `${error.message} - failed to register book`
-      })
+      res.status(500).json({ message: error.message })
     }
   }
 
   static async updateBook(req, res) {
     try {
-      const updatedBook = await book.findByIdAndUpdate(req.params.id, req.body, { new: true })
-      
-      if (!updatedBook) {
-        return res.status(404).json({ message: "book not found"})
-      }
-      
+      const id = req.params.id
+      // { new: true } is needed so that the { book: updatedBook } line shows the updated title on request
+      const updatedBook = await book.findByIdAndUpdate(id, req.body, { new: true })
       res.status(200).json({
-        message: "book updated successfully",
+        message: "book updated",
         book: updatedBook,
       })
     } catch (error) {
-      res.status(500).json({
-        message: `${error.message} book cannot be updated`
-      })
+      res.status(500).json({ message: error.message })
     }
   }
 
   static async deleteBook(req, res) {
     try {
-      const deletedBook = await book.findByIdAndDelete(req.params.id)
-
-      if (!deletedBook) {
-        return res.status(404).json({ message: "book not found"})
-      }
-
+      const id = req.params.id
+      const deletedBook = await book.findByIdAndDelete(id)
       res.status(200).json({ 
-        message: "book deleted successfully",
-        book: deletedBook
+        message: "book deleted",
+        book: deletedBook,
       })
     } catch (error) {
-      res.status(500).json({
-        message: `${error.message} book cannot be deleted`
-      })
+      res.status(500).json({ message: error.message })
     }
   }
 }

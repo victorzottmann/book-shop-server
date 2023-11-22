@@ -1,5 +1,7 @@
 import express from "express"
-import books from "./bookRoutes.js"
+
+import bookRoutes from "./bookRoutes.js"
+import authorRoutes from "./authorRoutes.js"
 
 /**
  * express.json() is a middleware built into express used to parse requests with JSON payloads.
@@ -21,7 +23,7 @@ import books from "./bookRoutes.js"
 */
 const routes = (app) => {
   app.route("/").get((req, res) => res.status(200).send("Book shop server"))
-  app.use(express.json(), books)
+  app.use(express.json(), bookRoutes, authorRoutes)
 }
 
 export default routes

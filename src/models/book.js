@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { authorSchema } from "./author.js"
 
 const bookSchema = new mongoose.Schema({
   id: { type: mongoose.Schema.Types.ObjectId },
@@ -6,6 +7,7 @@ const bookSchema = new mongoose.Schema({
   publisher: { type: String },
   price: { type: Number },
   pages: { type: Number },
+  author: authorSchema
 }, {versionKey: false })
 
 /**

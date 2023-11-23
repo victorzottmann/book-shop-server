@@ -6,11 +6,11 @@ import routes from "./routes/index.js"
 const connection = await connectToDb()
 
 connection.on("error", (error) => {
-  console.error("Connection error", error)
+  console.error("Database connection error", error)
 })
 
 connection.once("open", () => {
-  console.log("Database connection successful");
+  console.log("Database connected");
 })
 
 const app = express()

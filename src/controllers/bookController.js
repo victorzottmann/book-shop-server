@@ -1,4 +1,5 @@
 import book from "../models/Book.js"
+import { author } from "../models/author.js"
 
 class BookController {
   static async getBooks(req, res) {
@@ -21,11 +22,19 @@ class BookController {
   }
 
   static async addBook(req, res) {
+    const newBook = req.body
     try {
-      const newBook = await book.create(req.body)
+      const foundAuthor = await author.findById(newBook.author)
+      // foundAuthor._doc is the raw data of the mongoose object
+      // this is useful for creating new objects or performing operations outside of the mongoose context
+      const fullBook = {
+        ...newBook,
+        author: { ...foundAuthor._doc }
+      }
+      const bookCreated = await book.create(fullBook)
       res.status(201).json({
         message: "book created",
-        newBook,
+        bookCreated,
       })
     } catch (error) {
       res.status(500).json({ message: error.message })

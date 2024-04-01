@@ -1,4 +1,4 @@
-# Book Shop Server
+# Book Shop REST API Server
 
 This is a simple book shop REST API server built with Node.js, Express.js, and MongoDB for practice purposes.
 
